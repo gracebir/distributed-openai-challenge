@@ -2,15 +2,12 @@ const Message = require('../models/Message')
 
 function saveMessage(req, res){
     const {text, isAi, user} = req.body;
-    console.log("????",text, isAi, user)
     const newMessage = new Message({
         text,
         isAi,
         user
     })
     newMessage.save()
-    .then(message => res.json(message))
-    .catch(error => console.log(error))
 }
 
 function findMessageByUser(req, res){
