@@ -10,7 +10,7 @@ function TextMessage() {
       const messageData = {
         message: text
       }
-      const response = await axios.post('http://localhost:4000', messageData)
+      const response = await axios.post('http://localhost:4000/openai', messageData)
       const data = await response.data
       const newAnswer = {
         isAi: true,
@@ -20,7 +20,7 @@ function TextMessage() {
       const newMessage = {
         isAi: false,
         text: text,
-        user: "GR"
+        user: "Grace Birindwa"
       }
       setMessages([...messages, newMessage ,newAnswer])
     }
