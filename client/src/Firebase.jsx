@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 const firebaseConfig = {
@@ -19,7 +18,7 @@ export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider)
     const data = await result.user;
-    console.log(data)
+    return data
   } catch (error) {
     console.log(error)
   }
