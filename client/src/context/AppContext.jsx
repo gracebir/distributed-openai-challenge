@@ -5,6 +5,8 @@ const initialState = {
     messages: [],
     setMessages: null,
     user: "",
+    login: null,
+    signup: null,
     setUser: null,
     isLogged: false,
     setIsLogged: null
@@ -17,6 +19,15 @@ export const AppProvider = ({children}) => {
     const [isLogged, setIsLogged] = useState(false)
     const [user, setUser] = useState("")
 
+    const login = (user, token) => {
+        localStorage.setItem("token", token)
+        setUser(user)
+    }
+
+    const register = (user, token) => {
+        localStorage.setItem('token', token)
+        setUser(user)
+    }
    
     useEffect(()=> {
         const getMessages = async () => {
@@ -35,7 +46,9 @@ export const AppProvider = ({children}) => {
             user: user, 
             setUser: setUser,
             isLogged: isLogged,
-            setIsLogged: setIsLogged
+            setIsLogged: setIsLogged,
+            login,
+            signup: register
         }}>
             {children}
         </AppContext.Provider>
