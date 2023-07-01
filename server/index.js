@@ -1,6 +1,7 @@
 const { Configuration, OpenAIApi} = require('openai')
 const express = require('express')
 const dotenv = require('dotenv')
+const userRoute = require('./routes/user.route')
 const Message = require('./models/Message')
 const {saveMessage, findMessageByUser} = require('./controller/message.controller')
 const cors = require('cors')
@@ -46,5 +47,7 @@ app.get('/', (req, res)=> {
 })
 
 app.get('/messages/:user', findMessageByUser)
+
+app.use('/user', userRoute)
 
 app.listen(port, ()=> console.log(`server runs on: http://localhost:${port}`))
