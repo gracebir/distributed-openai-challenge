@@ -16,7 +16,7 @@ function SignIn() {
       password: '',
     },
     onSubmit: () => {
-
+      
     }
   })
   const handleSignIn = async () => {
@@ -47,7 +47,7 @@ function SignIn() {
                 <button className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                   Sign Up
                 </button>
-                <span className="w-10 h-10 border rounded-lg cursor-pointer">
+                <span onClick={handleSignIn} className="w-10 h-10 border rounded-lg cursor-pointer">
                   <img className='w-full' src={googleLogo} alt="googlelogo" />
                 </span>
               </div>

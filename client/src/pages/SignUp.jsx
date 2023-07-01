@@ -29,10 +29,10 @@ function SignUp() {
                 </div>
                 <h3 className='font-semibold'>Create an account here</h3>
                 <form className="flex flex-col gap-4">
-                    <TextField name={"name"} label={"Name"} value={values.name} onChange={handleChange} type={"text"} />
-                    <TextField name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
-                    <TextField name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
-                    <TextField name="confirmPassword" label={"Confirm password"} value={values.confirmPassword} onChange={handleChange} type={"password"} />
+                    <TextField onBlur={handleBlur} name={"name"} label={"Name"} value={values.name} onChange={handleChange} type={"text"} />
+                    <TextField onBlur={handleBlur} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
+                    <TextField onBlur={handleBlur} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
+                    <TextField onBlur={handleBlur} name="confirmPassword" label={"Confirm password"} value={values.confirmPassword} onChange={handleChange} type={"password"} />
                     <div className='flex justify-between items-end'>
                         <button className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                             Sign Up
