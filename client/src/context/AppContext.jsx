@@ -21,11 +21,13 @@ export const AppProvider = ({children}) => {
 
     const login = (user, token) => {
         localStorage.setItem("token", token)
+        localStorage.setItem("user", user)
         setUser(user)
     }
 
     const register = (user, token) => {
         localStorage.setItem('token', token)
+        localStorage.setItem("user", user)
         setUser(user)
     }
    
