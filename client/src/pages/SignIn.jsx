@@ -6,13 +6,13 @@ import { AppContext } from '../context/AppContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import TextField from '../components/TextField'
-import { signInSchema } from '../utils/signinSchema'
+import { signInSchema } from '../utils/signSchema'
 import { baseUrl } from '../utils/baseUrl'
 
 function SignIn() {
   const navigate = useNavigate()
   const { setUser, setIsLogged, login } = useContext(AppContext)
-  const { values, handleChange, handleSubmit, handleBlur, errors } = useFormik({
+  const { values, handleChange, handleSubmit,touched, handleBlur, errors } = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -25,7 +25,8 @@ function SignIn() {
       })
       const data = await response.data
       login(data.user.name, data.user.token)
-      navigate('/chat')
+      navigate('/')
+      console.log("submit", values)
     }
   })
   const handleSignIn = async () => {

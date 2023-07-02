@@ -1,19 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useFormik } from 'formik'
 import TextField from '../components/TextField'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo1.svg'
+import { signUpSchema } from '../utils/signSchema'
+import { baseUrl } from '../utils/baseUrl'
+import { AppContext } from '../context/AppContext'
 
 function SignUp() {
-    const { values, handleChange, handleBlur, errors } = useFormik({
+    const {signup} = useContext(AppContext)
+    const navigate = useNavigate()
+    const { values, handleChange, handleBlur, touched, handleSubmit, errors } = useFormik({
         initialValues: {
             name: '',
             email: '',
             password: '',
             confirmPassword: ''
         },
-        onSubmit: () => {
-
+        validationSchema: signUpSchema,
+        onSubmit: async (values) => {
+            console.log(values)
+            const response = await baseUrl.post('/user', {
+                name: values.name,
+                email: values.email,
+                password: values.password
+            })
+            const data = response.data
+            signup(data.user.name, data.user.token)
+            navigate('/')
         }
     })
 
@@ -28,11 +42,11 @@ function SignUp() {
                     </div>
                 </div>
                 <h3 className='font-semibold'>Create an account here</h3>
-                <form className="flex flex-col gap-4">
-                    <TextField onBlur={handleBlur} name={"name"} label={"Name"} value={values.name} onChange={handleChange} type={"text"} />
-                    <TextField onBlur={handleBlur} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
-                    <TextField onBlur={handleBlur} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
-                    <TextField onBlur={handleBlur} name="confirmPassword" label={"Confirm password"} value={values.confirmPassword} onChange={handleChange} type={"password"} />
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <TextField onBlur={handleBlur} errorMsg={errors.name} touched={touched.name} name={"name"} label={"Name"} value={values.name} onChange={handleChange} type={"text"} />
+                    <TextField onBlur={handleBlur} errorMsg={errors.email} touched={touched.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
+                    <TextField onBlur={handleBlur} errorMsg={errors.password} touched={touched.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
+                    <TextField onBlur={handleBlur} errorMsg={errors.confirmPassword} touched={touched.confirmPassword} name="confirmPassword" label={"Confirm password"} value={values.confirmPassword} onChange={handleChange} type={"password"} />
                     <div className='flex justify-between items-end'>
                         <button className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                             Sign Up
