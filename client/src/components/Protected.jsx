@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
-function Protected({ isLoggedIn, children }) {
-   if (!isLoggedIn) {
-      return <Navigate to={"/"} replace />
+function Protected({ children }) {
+   const { user } = useContext(AppContext)
+   if (!user) {
+      return <Navigate to={"/"} />
    } else {
       return children
    }
