@@ -6,17 +6,26 @@ import { AppContext } from '../context/AppContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import TextField from '../components/TextField'
+import { signInSchema } from '../utils/signinSchema'
+import { baseUrl } from '../utils/baseUrl'
 
 function SignIn() {
   const navigate = useNavigate()
-  const { setUser, setIsLogged } = useContext(AppContext)
-  const { values, handleChange, handleBlur, errors } = useFormik({
+  const { setUser, setIsLogged, login } = useContext(AppContext)
+  const { values, handleChange, handleSubmit, handleBlur, errors } = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: () => {
-      
+    validationSchema: signInSchema,
+    onSubmit: async (values) => {
+      const response = await baseUrl.post('/user/auth', {
+        email: values.email,
+        password: values.password
+      })
+      const data = await response.data
+      login(data.user.name, data.user.token)
+      navigate('/chat')
     }
   })
   const handleSignIn = async () => {
@@ -38,13 +47,13 @@ function SignIn() {
           </div>
         </div>
         <h3 className='font-semibold'>Please log in to continue</h3>
-        <form className="flex flex-col gap-4">
-          <TextField name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
-          <TextField name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <TextField onBlur={handleBlur} errorMsg={errors.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
+          <TextField onBlur={handleBlur} errorMsg={errors.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
           <div className='mt-4'>
             <div className='flex  flex-col-reverse gap-2'>
               <div className='flex gap-4'>
-                <button className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
+                <button type='submit' className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                   Sign Up
                 </button>
                 <span onClick={handleSignIn} className="w-10 h-10 border rounded-lg cursor-pointer">
