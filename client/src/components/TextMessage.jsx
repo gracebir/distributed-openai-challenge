@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import sent from '../assets/send.svg'
-import axios from 'axios'
+import {baseUrl} from '../utils/baseUrl'
 import { AppContext } from '../context/AppContext'
 
 function TextMessage() {
@@ -19,7 +19,7 @@ function TextMessage() {
       text: text,
       user: user
     }
-    const response = await axios.post('http://localhost:4000/openai', messageData)
+    const response = await baseUrl.post('/openai', messageData)
     const data = response.data
     const newAnswer = {
       isAi: true,
