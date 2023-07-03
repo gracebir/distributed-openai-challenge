@@ -23,12 +23,14 @@ function SignIn() {
         email: values.email,
         password: values.password
       })
+    console.log(response)
       const data = await response.data
       login(data.user.name, data.user.token)
       navigate('/')
-      console.log("submit", values)
     }
   })
+
+  // login with google
   const handleSignIn = async () => {
     const data = await signInWithGoogle()
     setUser(data.displayName)
@@ -49,13 +51,13 @@ function SignIn() {
         </div>
         <h3 className='font-semibold'>Please log in to continue</h3>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <TextField onBlur={handleBlur} errorMsg={errors.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
-          <TextField onBlur={handleBlur} errorMsg={errors.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
+          <TextField touched={touched.email} onBlur={handleBlur} errorMsg={errors.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
+          <TextField touched={touched.password} onBlur={handleBlur} errorMsg={errors.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
           <div className='mt-4'>
             <div className='flex  flex-col-reverse gap-2'>
               <div className='flex gap-4'>
                 <button type='submit' className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
-                  Sign Up
+                  Sign In
                 </button>
                 <span onClick={handleSignIn} className="w-10 h-10 border rounded-lg cursor-pointer">
                   <img className='w-full' src={googleLogo} alt="googlelogo" />

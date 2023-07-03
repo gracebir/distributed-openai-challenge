@@ -51,7 +51,7 @@ const login = (req,res) => {
         if(!user) return res.status(502).json({msg:'User does not exist'});
         bcrypt.compare(password, user.password)
         .then(isMatch => {
-            if(!isMatch) return res.status(400).json({msg:'Incorrect Password!!'});
+            if(!isMatch) return res.status(401).json({msg:'Incorrect Password!!'});
             jwt.sign(
                 {id: user.id},
                 process.env.secret_key,
