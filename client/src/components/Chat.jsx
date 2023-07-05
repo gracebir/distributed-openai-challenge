@@ -3,7 +3,7 @@ import React from 'react'
 function Chat({ isAi = false, text, user }) {
     return (
         <div className='w-full'>
-            <div className={`${isAi ? "float-left flex-row-reverse" : "float-right"} flex items-start gap-2`}>
+            <div className={`${isAi ? "float-left flex-row-reverse" : "float-right"}  flex items-start gap-2`}>
                 <div className='py-2 px-4 rounded-md bg-gray-color'>
                     <span className='text-text-color font-normal'>{text}</span>
                 </div>
