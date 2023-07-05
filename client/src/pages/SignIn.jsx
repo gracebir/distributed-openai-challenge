@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { signInWithGoogle } from '../Firebase'
 import googleLogo from '../assets/google_logo.svg'
 import logo from '../assets/logo1.svg'
@@ -11,6 +11,7 @@ import { baseUrl } from '../utils/baseUrl'
 
 function SignIn() {
   const navigate = useNavigate()
+  const [error, setError] = useState("")
   const { setUser, setIsLogged, login } = useContext(AppContext)
   const { values, handleChange, handleSubmit,touched, handleBlur, errors } = useFormik({
     initialValues: {
@@ -18,12 +19,14 @@ function SignIn() {
       password: '',
     },
     validationSchema: signInSchema,
-    onSubmit: async (values) => {
-      const response = await baseUrl.post('/user/auth', {
-        email: values.email,
-        password: values.password
+    onSubmit: async (values, actions) => {
+      const response = await baseUrl.post('/user/auth', values).catch(err=>{
+        setError(err.response.data.msg)
+        console.log(err.response.data.msg)
       })
-    console.log(response)
+      // console.log("response",await response.statusText)
+      console.log(errors.password)
+
       const data = await response.data
       login(data.user.name, data.user.token)
       navigate('/')
@@ -53,6 +56,7 @@ function SignIn() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <TextField touched={touched.email} onBlur={handleBlur} errorMsg={errors.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
           <TextField touched={touched.password} onBlur={handleBlur} errorMsg={errors.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
+          {error && <span className='text-red-500 text-sm italic'>{error}</span>}
           <div className='mt-4'>
             <div className='flex  flex-col-reverse gap-2'>
               <div className='flex gap-4'>
