@@ -48,7 +48,7 @@ const login = (req,res) => {
     if(!email | !password) return res.json({msg: 'Please provide the email and password !!!'});
     UserModel.findOne({email})
     .then(user => {
-        if(!user) return res.status(502).json({msg:'User does not exist'});
+        if(!user) return res.status(402).json({msg:'User does not exist'});
         bcrypt.compare(password, user.password)
         .then(isMatch => {
             if(!isMatch) return res.status(401).json({msg:'Incorrect Password!!'});
