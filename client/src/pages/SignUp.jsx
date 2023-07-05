@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import TextField from '../components/TextField'
 import { Link, useNavigate } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { AppContext } from '../context/AppContext'
 
 function SignUp() {
     const {signup} = useContext(AppContext)
+    const [error, setError] = useState("")
     const navigate = useNavigate()
     const { values, handleChange, handleBlur, touched, handleSubmit, errors } = useFormik({
         initialValues: {
@@ -18,12 +19,15 @@ function SignUp() {
             confirmPassword: ''
         },
         validationSchema: signUpSchema,
+        validateOnBlur: true,
         onSubmit: async (values) => {
-            console.log(values)
             const response = await baseUrl.post('/user', {
                 name: values.name,
                 email: values.email,
                 password: values.password
+            }).catch(err => {
+                console.log(err.response)
+                setError(err.response.data.msg)
             })
             const data = response.data
             signup(data.user.name, data.user.token)
@@ -47,8 +51,9 @@ function SignUp() {
                     <TextField onBlur={handleBlur} errorMsg={errors.email} touched={touched.email} name={"email"} label={"Email"} value={values.email} onChange={handleChange} type={"email"} />
                     <TextField onBlur={handleBlur} errorMsg={errors.password} touched={touched.password} name="password" label={"Password"} value={values.password} onChange={handleChange} type={"password"} />
                     <TextField onBlur={handleBlur} errorMsg={errors.confirmPassword} touched={touched.confirmPassword} name="confirmPassword" label={"Confirm password"} value={values.confirmPassword} onChange={handleChange} type={"password"} />
+                    {error && <span className='text-red-500 text-sm italic'>Oops! {error}</span>}
                     <div className='flex justify-between items-end'>
-                        <button className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
+                        <button type='submit' className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                             Sign Up
                         </button>
                         <span className='text-sm'>Have an account. <Link className='text-button-color underline' to={"/"}>Login</Link></span>
