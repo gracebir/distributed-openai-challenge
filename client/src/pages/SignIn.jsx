@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { signInWithGoogle } from '../Firebase'
-import googleLogo from '../assets/google_logo.svg'
 import logo from '../assets/logo1.svg'
 import { AppContext } from '../context/AppContext'
 import { Link, useNavigate } from 'react-router-dom'
@@ -63,9 +62,9 @@ function SignIn() {
                 <button type='submit' className='bg-button-color hover:bg-button-color px-5 py-2 text-white font-semibold rounded-lg'>
                   Sign In
                 </button>
-                <span onClick={handleSignIn} className="w-10 h-10 border rounded-lg cursor-pointer">
+                {/* <span onClick={handleSignIn} className="w-10 h-10 border rounded-lg cursor-pointer">
                   <img className='w-full' src={googleLogo} alt="googlelogo" />
-                </span>
+                </span> */}
               </div>
               <span className='text-sm'>Don't have an Account. <Link className='text-button-color underline' to={"/signup"}>Sign Up</Link></span>
             </div>
