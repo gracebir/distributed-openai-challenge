@@ -30,7 +30,6 @@ export const AppProvider = ({children}) => {
         setUser("")
         localStorage.removeItem("user")
         localStorage.removeItem("token")
-        console.log("logout")
     }
 
     const register = (user, token) => {
