@@ -9,15 +9,12 @@ const initialState = {
     logout: null,
     signup: null,
     setUser: null,
-    isLogged: false,
-    setIsLogged: null
 }
 
 export const AppContext = createContext(initialState)
 
 export const AppProvider = ({children}) => {
     const [messages, setMessages] = useState([])
-    const [isLogged, setIsLogged] = useState(false)
     const [user, setUser] = useState("")
 
     const login = (user, token) => {
@@ -54,8 +51,6 @@ export const AppProvider = ({children}) => {
             setMessages: setMessages,
             user: user, 
             setUser: setUser,
-            isLogged: isLogged,
-            setIsLogged: setIsLogged,
             login,
             signup: register,
             logout
