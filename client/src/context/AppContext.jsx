@@ -1,11 +1,12 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import { baseUrl } from "../utils/baseUrl";
 
 const initialState = {
     messages: [],
     setMessages: null,
     user: "",
     login: null,
+    logout: null,
     signup: null,
     setUser: null,
     isLogged: false,
@@ -25,6 +26,13 @@ export const AppProvider = ({children}) => {
         setUser(user)
     }
 
+    const logout = () => {
+        setUser("")
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+        console.log("logout")
+    }
+
     const register = (user, token) => {
         localStorage.setItem('token', token)
         localStorage.setItem("user", user)
@@ -33,7 +41,7 @@ export const AppProvider = ({children}) => {
    
     useEffect(()=> {
         const getMessages = async () => {
-            const response = await axios.get(`http://localhost:4000/messages/${user}`)
+            const response = await baseUrl.get(`/messages/${user}`)
             const data = await response.data
             setMessages(data)
         }
@@ -50,7 +58,8 @@ export const AppProvider = ({children}) => {
             isLogged: isLogged,
             setIsLogged: setIsLogged,
             login,
-            signup: register
+            signup: register,
+            logout
         }}>
             {children}
         </AppContext.Provider>

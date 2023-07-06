@@ -19,7 +19,7 @@ function SignIn() {
       password: '',
     },
     validationSchema: signInSchema,
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       const response = await baseUrl.post('/user/auth', values).catch(err=>{
         setError(err.response.data.msg)
         console.log(err.response.data.msg)
@@ -38,7 +38,7 @@ function SignIn() {
     const data = await signInWithGoogle()
     setUser(data.displayName)
     setIsLogged(false)
-    navigate("/chat")
+    navigate("/")
     localStorage.setItem("user", data.displayName)
     localStorage.setItem("isLogged", true)
   }
