@@ -36,10 +36,10 @@ function SignIn() {
   // login with google
   const handleSignIn = async () => {
     const data = await signInWithGoogle()
-    setUser(data.displayName)
+    setUser(data?.displayName)
     setIsLogged(false)
     navigate("/")
-    localStorage.setItem("user", data.displayName)
+    localStorage.setItem("user", data?.displayName)
     localStorage.setItem("isLogged", true)
   }
   return (
