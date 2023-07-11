@@ -43,7 +43,6 @@ export const AppProvider = ({children}) => {
         }
         getMessages()
         setUser(localStorage.getItem("user"))
-        setIsLogged(!!localStorage.getItem("isLogged"))
     }, [user])
     return (
         <AppContext.Provider value={{
